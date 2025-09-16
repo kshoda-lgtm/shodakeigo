@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社内DX課題ヒアリングシート</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📊 社内DX課題ヒアリングシート</h1>
+            <p class="subtitle">ARISガイドの皆様の貴重なご意見をお聞かせください</p>
+        </header>
+
+        <form id="hearingForm" class="form">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-text" id="progressText">0% 完了</span>
+
+            <!-- 基本情報 -->
+            <section class="section">
+                <h2>👤 基本情報</h2>
+                <div class="form-group">
+                    <label for="name">お名前（任意）</label>
+                    <input type="text" id="name" name="name" placeholder="匿名でも構いません">
+                </div>
+                <div class="form-group required">
+                    <label for="department">所属部署・チーム <span class="required-mark">*</span></label>
+                    <input type="text" id="department" name="department" placeholder="例：営業部、開発チーム" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">役職・立場</label>
+                    <input type="text" id="role" name="role" placeholder="例：マネージャー、リーダー、メンバー">
+                </div>
+            </section>
+
+            <!-- 主な質問 -->
+            <section class="section">
+                <h2>💡 DX化に関するご相談</h2>
+                <div class="form-group required">
+                    <label for="currentIssues">現在の業務で困っていること・改善したいことを教えてください <span class="required-mark">*</span></label>
+                    <textarea id="currentIssues" name="currentIssues" rows="5" placeholder="例：
+• 月次レポート作成に丸一日かかる
+• 手作業でのデータ集計が大変
+• システムが重くて作業効率が悪い
+• 情報共有がうまくいかない
+など、どのようなことでも構いません" required></textarea>
+                </div>
+
+                <div class="form-group required">
+                    <label for="idealSolution">理想的には、どのような改善や自動化ができれば良いと思いますか？ <span class="required-mark">*</span></label>
+                    <textarea id="idealSolution" name="idealSolution" rows="5" placeholder="例：
+• 自動でレポートが作成される
+• データ入力が不要になる
+• 一つのシステムで全て管理できる
+• リアルタイムで状況が把握できる
+など、技術的な制約は考えずに自由にお聞かせください" required></textarea>
+                </div>
+
+                <!-- 詳細情報（任意） -->
+                <details class="details-section">
+                    <summary>🔍 詳細な情報を入力する（任意）</summary>
+                    <div class="details-content">
+                        <div class="form-group">
+                            <label for="priority">特に優先したい改善項目があれば選択してください（複数選択可）</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="priority" value="業務の自動化"> 業務の自動化</label>
+                                <label><input type="checkbox" name="priority" value="データ分析の効率化"> データ分析の効率化</label>
+                                <label><input type="checkbox" name="priority" value="情報共有の改善"> 情報共有の改善</label>
+                                <label><input type="checkbox" name="priority" value="レポート作成の効率化"> レポート作成の効率化</label>
+                                <label><input type="checkbox" name="priority" value="システム連携"> システム連携</label>
+                                <label><input type="checkbox" name="priority" value="ペーパーレス化"> ペーパーレス化</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timeline">改善の実現希望時期</label>
+                            <select id="timeline" name="timeline">
+                                <option value="">選択してください</option>
+                                <option value="1ヶ月以内">1ヶ月以内</option>
+                                <option value="3ヶ月以内">3ヶ月以内</option>
+                                <option value="6ヶ月以内">6ヶ月以内</option>
+                                <option value="1年以内">1年以内</option>
+                                <option value="急がない">急がない</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">予算の考え方</label>
+                            <select id="budget" name="budget">
+                                <option value="">選択してください</option>
+                                <option value="低コスト重視">低コスト重視</option>
+                                <option value="ROI重視">ROI（費用対効果）重視</option>
+                                <option value="制約なし">制約なし</option>
+                                <option value="わからない">わからない</option>
+                            </select>
+                        </div>
+                    </div>
+                </details>
+            </section>
+
+            <!-- フリー記述欄 -->
+            <section class="section">
+                <h2>💭 自由記述欄</h2>
+                <div class="form-group">
+                    <label for="freeComment">その他、DX化について思うこと、要望、質問など、何でも自由にお書きください</label>
+                    <textarea id="freeComment" name="freeComment" rows="6" placeholder="例：
+• 具体的な困りごとや課題の詳細
+• 過去に試したことがある取り組み
+• 他部署で成功している事例
+• 技術的な制約や社内ルール
+• 予算や時期についての考え
+• その他どんな小さなことでも
+
+どのようなことでも構いません。気軽にお聞かせください。"></textarea>
+                </div>
+            </section>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">📤 ヒアリング内容を送信</button>
+                <button type="button" class="download-btn" id="downloadBtn">💾 回答をダウンロード</button>
+            </div>
+        </form>
+
+        <div id="successMessage" class="success-message" style="display: none;">
+            <h3>✅ ありがとうございました！</h3>
+            <p>ヒアリング内容を受け取りました。いただいた貴重なご意見を参考に、DX化プロジェクトを進めてまいります。</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
