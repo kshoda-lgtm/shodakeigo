@@ -2,88 +2,82 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
+    color: #333;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
 }
 
 .header {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-    padding: 40px;
     text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    padding: 20px;
 }
 
 .header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 10px;
-    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .subtitle {
     font-size: 1.1rem;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .form {
-    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
 
 .progress-bar {
     width: 100%;
     height: 8px;
     background: #e0e0e0;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    border-radius: 4px;
-    width: 0%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
     transition: width 0.3s ease;
+    width: 0%;
 }
 
 .progress-text {
     display: block;
     text-align: center;
-    font-size: 0.9rem;
     color: #666;
+    font-size: 0.9rem;
     margin-bottom: 30px;
 }
 
 .section {
-    margin-bottom: 40px;
-    padding: 30px;
-    background: #f8f9fa;
-    border-radius: 15px;
-    border-left: 5px solid #4facfe;
+    margin-bottom: 35px;
 }
 
 .section h2 {
-    color: #2c3e50;
-    margin-bottom: 25px;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
 }
 
 .form-group {
@@ -92,288 +86,216 @@ body {
 
 .form-group label {
     display: block;
+    font-weight: 500;
     margin-bottom: 8px;
-    font-weight: 600;
-    color: #2c3e50;
-    font-size: 1rem;
-}
-
-/* 必須項目のスタイル */
-.form-group.required {
-    background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
-    border-left: 4px solid #ff6b6b;
-    padding: 20px;
-    border-radius: 10px;
+    color: #555;
+    font-size: 0.95rem;
 }
 
 .required-mark {
-    color: #dc3545;
+    color: #e74c3c;
     font-weight: bold;
-    font-size: 1.1rem;
 }
 
-.form-group.required label {
-    color: #d63384;
-    font-weight: 700;
-}
-
-.form-group.required input,
-.form-group.required textarea {
-    border: 2px solid #ff6b6b;
-}
-
-.form-group.required input:focus,
-.form-group.required textarea:focus {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-}
-
-.form-group input[type="text"],
-.form-group textarea,
-.form-group select {
+.form-group input,
+.form-group textarea {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+    border-radius: 8px;
+    font-size: 16px; /* iOS zoom防止 */
     font-family: inherit;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none; /* iOS デフォルトスタイルを無効化 */
+    appearance: none;
 }
 
-.form-group input[type="text"]:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
-    border-color: #4facfe;
-    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .form-group textarea {
     resize: vertical;
-    min-height: 120px;
-}
-
-.checkbox-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    background: white;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: normal;
-}
-
-.checkbox-group label:hover {
-    border-color: #4facfe;
-    background: #f0f8ff;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #4facfe;
-}
-
-.checkbox-group input[type="checkbox"]:checked + span {
-    font-weight: 600;
+    line-height: 1.6;
 }
 
 .submit-section {
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 2px solid #e0e0e0;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
-    flex-wrap: wrap;
+    margin-top: 40px;
 }
 
 .submit-btn,
 .download-btn {
     padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
     font-size: 1.1rem;
     font-weight: 600;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 200px;
+    font-family: inherit;
+    display: inline-block;
+    text-align: center;
+
+    /* モバイルタッチ対応 */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
+    flex: 1;
+    max-width: 300px;
 }
 
-.submit-btn:hover {
+.submit-btn:hover,
+.submit-btn:active {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* モバイル用のアクティブ状態 */
+.submit-btn:active {
+    transform: translateY(0);
 }
 
 .download-btn {
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-    color: #2c3e50;
+    background: #f8f9fa;
+    color: #495057;
+    border: 2px solid #dee2e6;
+    flex: 1;
+    max-width: 300px;
 }
 
-.download-btn:hover {
+.download-btn:hover,
+.download-btn:active {
+    background: #e9ecef;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(168, 237, 234, 0.3);
+}
+
+/* モバイル用のアクティブ状態 */
+.download-btn:active {
+    transform: translateY(0);
 }
 
 .success-message {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    color: #155724;
+    background: white;
+    border-radius: 15px;
     padding: 40px;
     text-align: center;
-    border-radius: 15px;
-    margin: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
 
 .success-message h3 {
-    font-size: 1.5rem;
+    color: #27ae60;
+    font-size: 1.8rem;
     margin-bottom: 15px;
 }
 
-/* レスポンシブデザイン */
+.success-message p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* モバイル対応 */
 @media (max-width: 768px) {
     body {
         padding: 10px;
     }
 
-    .container {
-        border-radius: 15px;
-    }
-
-    .header {
-        padding: 30px 20px;
-    }
-
     .header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
     }
 
     .form {
         padding: 20px;
     }
 
-    .section {
-        padding: 20px;
-    }
-
-    .checkbox-group {
-        grid-template-columns: 1fr;
+    .section h2 {
+        font-size: 1.2rem;
     }
 
     .submit-section {
         flex-direction: column;
-        align-items: center;
     }
 
     .submit-btn,
     .download-btn {
-        width: 100%;
-        max-width: 300px;
+        max-width: 100%;
+        padding: 18px 30px; /* モバイルで押しやすくする */
+        font-size: 1rem;
+    }
+
+    /* タッチデバイス用の追加スタイル */
+    @media (hover: none) and (pointer: coarse) {
+        .submit-btn,
+        .download-btn {
+            min-height: 50px; /* 最小高さを確保 */
+        }
+
+        /* ホバーエフェクトを無効化 */
+        .submit-btn:hover,
+        .download-btn:hover {
+            transform: none;
+        }
     }
 }
 
-/* アニメーション */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* プレースホルダーのスタイル */
+::-webkit-input-placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+::-moz-placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+::placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* フォーカス時のアニメーション */
+@keyframes focusPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
     }
 }
 
-.section {
-    animation: fadeIn 0.6s ease forwards;
-}
-
-.section:nth-child(1) { animation-delay: 0.1s; }
-.section:nth-child(2) { animation-delay: 0.2s; }
-.section:nth-child(3) { animation-delay: 0.3s; }
-.section:nth-child(4) { animation-delay: 0.4s; }
-.section:nth-child(5) { animation-delay: 0.5s; }
-.section:nth-child(6) { animation-delay: 0.6s; }
-.section:nth-child(7) { animation-delay: 0.7s; }
-
-/* フォームバリデーション */
-.form-group input:invalid,
-.form-group textarea:invalid,
-.form-group select:invalid {
-    border-color: #ff6b6b;
-}
-
-.form-group input:valid,
-.form-group textarea:valid,
-.form-group select:valid {
-    border-color: #51cf66;
-}
-
-/* 詳細セクションのスタイル */
-.details-section {
-    margin: 20px 0;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.details-section summary {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 15px 20px;
-    font-weight: 600;
-    color: #495057;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    user-select: none;
-    transition: background 0.3s ease;
-}
-
-.details-section summary:hover {
-    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
-}
-
-.details-section[open] summary {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-}
-
-.details-content {
-    padding: 20px;
-    background: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
-}
-
-.details-content .form-group {
-    margin-bottom: 20px;
-}
-
-.details-content .form-group:last-child {
-    margin-bottom: 0;
-}
-
-/* ローディング状態 */
-.submit-btn:disabled {
-    background: #ccc;
+/* ボタンを押せない状態のスタイル */
+.submit-btn:disabled,
+.download-btn:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
+    transform: none !important;
 }
 
-.submit-btn:disabled:hover {
-    transform: none;
-    box-shadow: none;
+/* iOS Safari用の追加対応 */
+input, textarea, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 8px; /* iOS でのデフォルト角丸を上書き */
 }
