@@ -126,6 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const downloadBtn = document.getElementById('downloadBtn');
 
+    // ページ読み込み時にフォームをリセット
+    if (form) {
+        form.reset();
+    }
+
     // プログレスバー初期化
     updateProgress();
 
@@ -144,18 +149,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 送信ボタンのイベント（モバイル対応強化）
     if (submitBtn) {
-        // クリックイベント
-        submitBtn.addEventListener('click', function(e) {
-            if (e.target.closest('form')) {
-                // フォーム内のボタンクリックはsubmitイベントに委譲
-                return;
-            }
+        // タッチイベントのフラグ
+        let touchHandled = false;
+
+        // タッチスタートイベント
+        submitBtn.addEventListener('touchstart', function(e) {
+            touchHandled = false;
+        }, { passive: true });
+
+        // タッチエンドイベント（モバイル専用）
+        submitBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            touchHandled = true;
             handleFormSubmit(e);
         }, { passive: false });
 
-        // タッチイベント（モバイル専用）
-        submitBtn.addEventListener('touchend', function(e) {
+        // クリックイベント（PCとモバイルのフォールバック）
+        submitBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            // タッチイベントが処理された場合はスキップ
+            if (touchHandled) {
+                touchHandled = false;
+                return;
+            }
             handleFormSubmit(e);
         }, { passive: false });
 
@@ -167,12 +183,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ダウンロードボタンのイベント（モバイル対応強化）
     if (downloadBtn) {
-        // クリックイベント
-        downloadBtn.addEventListener('click', handleDownload, { passive: false });
+        // タッチイベントのフラグ
+        let downloadTouchHandled = false;
 
-        // タッチイベント（モバイル専用）
+        // タッチスタートイベント
+        downloadBtn.addEventListener('touchstart', function(e) {
+            downloadTouchHandled = false;
+        }, { passive: true });
+
+        // タッチエンドイベント（モバイル専用）
         downloadBtn.addEventListener('touchend', function(e) {
             e.preventDefault();
+            downloadTouchHandled = true;
+            handleDownload(e);
+        }, { passive: false });
+
+        // クリックイベント（PCとモバイルのフォールバック）
+        downloadBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // タッチイベントが処理された場合はスキップ
+            if (downloadTouchHandled) {
+                downloadTouchHandled = false;
+                return;
+            }
             handleDownload(e);
         }, { passive: false });
 
