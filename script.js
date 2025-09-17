@@ -23,6 +23,9 @@ function updateProgress() {
     }
 }
 
+// Google Apps Script WebアプリのURL（デプロイ後に設定）
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwTaejYh_X2JLteHK3A2LVAOuI7ST_p08D72XZjHQAHP9ZIMz9kpLkCgJXcwTGdZiJJIQ/exec'; // GASのWebアプリURL
+
 // フォーム送信処理
 function handleFormSubmit(e) {
     e.preventDefault();
@@ -39,43 +42,102 @@ function handleFormSubmit(e) {
         return false;
     }
 
-    // フォームデータの整理
+    // フォームデータの整理（GAS用フォーマット）
     const data = {
         timestamp: new Date().toLocaleString('ja-JP'),
         name: formData.get('name') || '匿名',
         currentIssues: formData.get('currentIssues'),
-        freeComment: formData.get('freeComment')
+        freeComment: formData.get('freeComment'),
+        // GASで期待される追加フィールド
+        dailyTasks: formData.get('currentIssues'), // 現在の課題を日常業務として送信
+        manualWork: '', // 手作業の内容（必要に応じて追加）
+        systemIssues: '', // システムの問題（必要に応じて追加）
+        infoSharing: '', // 情報共有の問題（必要に応じて追加）
+        dreamSolution: formData.get('freeComment'), // 理想的な解決案として自由記述を使用
+        priority: [], // 優先度（必要に応じて追加）
+        timeline: '未定',
+        budget: '未定'
     };
 
-    // データの保存（ローカルストレージ）
+    // ローカルストレージに保存
     try {
         const savedData = JSON.parse(localStorage.getItem('dxHearingData') || '[]');
         savedData.push(data);
         localStorage.setItem('dxHearingData', JSON.stringify(savedData));
-
-        // 成功メッセージの表示
-        const successMessage = document.getElementById('successMessage');
-        if (successMessage) {
-            form.style.display = 'none';
-            successMessage.style.display = 'block';
-
-            // 3秒後にフォームをリセット
-            setTimeout(() => {
-                form.reset();
-                updateProgress();
-                form.style.display = 'block';
-                successMessage.style.display = 'none';
-            }, 3000);
-        }
-
-        console.log('送信データ:', data);
-
     } catch (error) {
-        console.error('データの保存に失敗しました:', error);
-        alert('送信に失敗しました。もう一度お試しください。');
+        console.error('ローカル保存エラー:', error);
+    }
+
+    // Google Apps Scriptに送信
+    if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== 'YOUR_GAS_WEB_APP_URL_HERE') {
+        sendToGoogleSheets(data);
+    } else {
+        console.warn('GAS WebアプリURLが設定されていません。スプレッドシートへの送信はスキップされます。');
+        showSuccessMessage();
     }
 
     return false;
+}
+
+// Google Sheetsへのデータ送信
+function sendToGoogleSheets(data) {
+    // 送信中の表示
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '送信中...';
+    submitBtn.disabled = true;
+
+    // フォームデータとして送信するためのURLSearchParams作成
+    const formData = new URLSearchParams();
+    formData.append('name', data.name || '匿名');
+    formData.append('currentIssues', data.currentIssues || '');
+    formData.append('freeComment', data.freeComment || '');
+    formData.append('timestamp', data.timestamp || '');
+
+    console.log('送信データ:', Object.fromEntries(formData));
+
+    fetch(GAS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors', // CORSエラーを回避
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+    })
+    .then(() => {
+        // no-corsモードではレスポンスを読めないため、送信完了と見なす
+        console.log('データ送信完了（フォームデータ形式）');
+        showSuccessMessage();
+    })
+    .catch(error => {
+        console.error('送信エラー:', error);
+        alert('スプレッドシートへの送信に失敗しました。ただし、データはローカルに保存されています。');
+        showSuccessMessage();
+    })
+    .finally(() => {
+        // ボタンを元に戻す
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
+// 成功メッセージ表示
+function showSuccessMessage() {
+    const form = document.getElementById('hearingForm');
+    const successMessage = document.getElementById('successMessage');
+
+    if (successMessage) {
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+
+        // 3秒後にフォームをリセット
+        setTimeout(() => {
+            form.reset();
+            updateProgress();
+            form.style.display = 'block';
+            successMessage.style.display = 'none';
+        }, 3000);
+    }
 }
 
 // ダウンロード処理
